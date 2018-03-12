@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTableViewCellDelegate, MKMapViewDelegate {
+class HomeViewController: MainViewController, UITableViewDelegate, UITableViewDataSource, HomeTableViewCellDelegate, MKMapViewDelegate {
     func firstDelegate(string: String) {
         print(string)
     }
@@ -25,8 +25,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         let nibName = UINib(nibName: "HomeTableViewCell", bundle:nil)
-        let navigationButton = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(openNavigation))
-        self.navigationItem.leftBarButtonItem = navigationButton
         self.title = Bundle.main.infoDictionary!["CFBundleName"] as? String
         self.mapView.delegate = self;
         self.tableView.register(nibName,forCellReuseIdentifier: "HomeTableViewCell")
@@ -142,18 +140,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
 
-    }
-    
-    @objc func openNavigation(){
-        print("navigation");
-        let navigationController = NavigationViewController(nibName: "NavigationViewController", bundle: nil)
-        let transition = CATransition()
-        transition.duration = 0.7
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        transition.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
-        present(navigationController, animated: false, completion: nil)
     }
 }
 
